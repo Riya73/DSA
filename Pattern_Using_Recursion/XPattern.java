@@ -3,7 +3,7 @@ package Patterns_Using_Recursion;
 public class XPattern {
     static void printX(int rows, int starsOrSpaces) {
         if (rows == 0) {
-            return;
+            return; 
         }
 
         printX(rows - 1, starsOrSpaces);
