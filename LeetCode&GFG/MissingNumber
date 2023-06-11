@@ -1,0 +1,11 @@
+class Solution{
+  int missingNumber(int[] arr, int n){
+     int totalSum = (n*(n+1))/2;
+     int arrSum = 0;
+     
+     for(int num : arr){
+        arrSum += num;
+      }
+     return totalSum - arrSum;
+    }
+  } 
