@@ -1,6 +1,6 @@
 package Patterns_Using_Recursion;
 
-public class XPattern {
+public class CrossDiagonalLine {
     static void printX(int rows, int starsOrSpaces) {
         if (rows == 0) {
             return; 
