@@ -1,32 +1,35 @@
-class Solution{
-public List<String> generateParenthesis(int n){
-        List<String> result = new ArrayList<>();
-        StringBuilder output = new StringBuilder();
-        generateParenthesis(result, n,0,0,output);
-        return result;
+import java.util.ArrayList;
+import java.util.List;
+
+public class GenerateParentheses {
+
+    public static List<String> generate(int n) {
+        List<String> ans = new ArrayList<>();
+        helper(ans, "", 0, 0, n);
+        return ans;
     }
 
-    private void generateParenthesis(List<String> result, int n, int ob, int cb, StringBuilder output){
-        //termination case
-        if(output.length() == n*2){
-            result.add(output.toString());
+    static void helper(List<String> ans, String currentBracket, int open, int close, int max) {
+
+        // Base Case
+        if(currentBracket.length() == max * 2) {
+            ans.add(currentBracket);
             return;
         }
 
-        //can i place opening bracket
-        if(ob<n){
-            output.append("("); //place ob
-            generateParenthesis(result, n, ob+1, cb, output);
-            // stack fall/backtrack
-            output.deleteCharAt(output.length()-1);
+        if(open < max) {
+            helper(ans, currentBracket + "(", open + 1, close, max);
         }
+        
+        if(close < open) {
+           helper(ans, currentBracket + ")", open, close + 1, max);
+        }
+        return;
+    }
 
-        //can i place closing bracket
-         if(cb<ob){
-            output.append(")"); //place cb
-            generateParenthesis(result, n, ob, cb+1, output);
-            //stack fall
-            output.deleteCharAt(output.length()-1);
-        }
+
+    public static void main(String[] args) {
+        List<String> ans = generate(3);
+        System.out.println(ans);
     }
 }
