@@ -1,20 +1,29 @@
+package Arrays;
 public class ThirdLargestElement {
-    public static int largest(int[] arr, int index){
-        for(int i = 0; i<index; i++){
-            for(int j = i+1; j<index; j++){
-                if(arr[i]>arr[j]){
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                }
-            }
+  static int thirdLargest(int[] arr, int n) {
+    int largest = arr[0];
+    int secondLargest = -1;
+    int thirdLargest = -1;
+
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > largest) {
+            thirdLargest = secondLargest;
+            secondLargest = largest;
+            largest = arr[i];
+        } else if (arr[i] < largest && arr[i] > secondLargest) {
+            thirdLargest = secondLargest;
+            secondLargest = arr[i];
+        } else if (arr[i] < secondLargest && arr[i] > thirdLargest) {
+            thirdLargest = arr[i];
         }
-        return arr[index-3];
     }
+    return thirdLargest;
+}
+
 
     public static void main(String[] args) {
-        int[] arr = {12, 14, 19, 11, 32};
+        int[] arr = {1,2,3,4,5,5,7,7};
         int index = arr.length;
-        System.out.println(largest(arr,index));
+        System.out.println(thirdLargest(arr,index));
     }
 }
