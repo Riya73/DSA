@@ -1,7 +1,7 @@
 package Arrays;
 
 public class ZigZagArray {
-    private static void convertToZigZag(int[] arr, int n) {
+    private static void zigZag(int[] arr, int n) {
         if (n <= 1) {
             return;
         }
@@ -23,15 +23,13 @@ public class ZigZagArray {
                 arr[i + 1] = temp;
             }
         }
-
-        // Recursively call the function for the remaining subarray
-        convertToZigZag(arr, n - 1);
+        zigZag(arr, n - 1);
     }
 
     public static void main(String[] args) {
         int arr [] ={4,3,7,8,6,2,1};
         int n = arr.length;
-        convertToZigZag(arr, n);
+        zigZag(arr, n);
         for (int i = 0; i < n; i++) {
             System.out.print(arr[i] + " ");
             }
