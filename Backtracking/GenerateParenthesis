@@ -1,10 +1,6 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class GenerateParentheses {
-
-    public static List<String> generate(int n) {
-        List<String> ans = new ArrayList<>();
+class Solution {
+    public List<String> generateParenthesis(int n) {
+         List<String> ans = new ArrayList<>();
         helper(ans, "", 0, 0, n);
         return ans;
     }
@@ -27,9 +23,4 @@ public class GenerateParentheses {
         return;
     }
 
-
-    public static void main(String[] args) {
-        List<String> ans = generate(3);
-        System.out.println(ans);
-    }
 }
