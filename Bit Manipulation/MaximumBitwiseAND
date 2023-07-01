@@ -1,0 +1,18 @@
+public class MaximumBitwiseAND {
+    public static void main(String[] args) {
+         int[] array = {3, 5, 8, 10, 12};
+        int n = array.length;
+
+        int maxAnd = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int andValue = array[i] & array[j];
+                if (andValue > maxAnd) {
+                    maxAnd = andValue;
+                }
+            }
+        }
+
+        System.out.println(maxAnd);
+    
+    }
