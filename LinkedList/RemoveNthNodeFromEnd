@@ -1,0 +1,38 @@
+public class RemoveNthNodeFromEnd {
+    class ListNode{
+        int data;
+        ListNode next = null;
+
+        public ListNode(int data){
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    ListNode removeNth(ListNode head, int n){
+        if(head == null){
+            return null;
+        }
+
+        int size = 0;
+        ListNode current = head;
+        while(current != null){
+            current = current.next;
+            size++;
+        }
+        if(n == size){
+            return head.next;
+        }
+
+        int index = size-n; 
+        ListNode prev = head;
+        int i = 1;
+
+        while(i<index){
+            prev = prev.next;
+            i++;
+        }
+        prev.next = prev.next.next;
+        return head;
+    }
+}
