@@ -1,0 +1,116 @@
+import java.util.Scanner;
+
+class Node {
+    int data;
+    Node next;
+    Node down;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+        this.down = null;
+    }
+}
+
+class LinkedList {
+    private Node head;
+
+    public void add(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    public void addDown(int mainData, int downData) {
+        Node current = head;
+        while (current != null && current.data != mainData) {
+            current = current.next;
+        }
+        if (current != null) {
+            Node newNode = new Node(downData);
+            newNode.down = current.down;
+            current.down = newNode;
+        } else {
+            System.out.println("Main node not found.");
+        }
+    }
+
+    public void flatten() {
+        if (head == null || head.next == null) {
+            return;
+        }
+
+        Node current = head;
+        while (current.next != null) {
+            Node nextNode = current.next;
+
+            while (current.down == null && nextNode != null) {
+                current = nextNode;
+                nextNode = nextNode.next;
+            }
+
+            if (current.down != null) {
+                Node downNode = current.down;
+                current.down = null;
+                current.next = downNode;
+                while (downNode.next != null) {
+                    downNode = downNode.next;
+                }
+                downNode.next = nextNode;
+            }
+        }
+    }
+
+    public void display() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        LinkedList list = new LinkedList();
+
+        System.out.print("Enter the number of elements in the linked list: ");
+        int n = scanner.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter element " + (i + 1) + ": ");
+            int data = scanner.nextInt();
+            list.add(data);
+        }
+
+        System.out.print("Enter the number of down nodes: ");
+        int m = scanner.nextInt();
+
+        for (int i = 0; i < m; i++) {
+            System.out.print("Enter main node value: ");
+            int mainData = scanner.nextInt();
+            System.out.print("Enter down node value: ");
+            int downData = scanner.nextInt();
+            list.addDown(mainData, downData);
+        }
+
+        System.out.print("Original linked list: ");
+        list.display();
+
+        list.flatten();
+
+        System.out.print("Flattened linked list: ");
+        list.display();
+
+        scanner.close();
+    }
+}
