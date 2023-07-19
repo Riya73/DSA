@@ -1,0 +1,47 @@
+ class PlaindromeLL {
+    class ListNode{
+        int data;
+        ListNode next;;
+
+        public ListNode(int data){
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    public ListNode findMiddle(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head;
+
+        if(fast.next != null && fast.next.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+    ListNode reverse(ListNode head){
+        ListNode curr = null;
+        while(head!= null){
+            ListNode next = head.next;
+            head.next = head;
+            curr = head;
+            head = next;
+        }
+        return curr;
+    }
+
+    public boolean isPlaindrome(ListNode head){
+        if(head == null || head.next == null){
+        return true;
+    }
+        ListNode middle = findMiddle(head);
+        ListNode second = reverse(middle.next);
+        ListNode start = head;
+        while(second != null && start != null){
+            if(start.data!= second.data) {return false;}
+            start = start.next;
+            second = second.next;
+        }
+        return true;
+    }
+}
