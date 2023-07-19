@@ -1,0 +1,127 @@
+import java.util.Scanner;
+
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class CircularLinkedList {
+    Node head;
+
+    public void insert(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            head.next = head;
+        } else {
+            Node current = head;
+            while (current.next != head) {
+                current = current.next;
+            }
+            current.next = newNode;
+            newNode.next = head;
+        }
+    }
+
+    public void display() {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        Node current = head;
+        do {
+            System.out.print(current.data + " ");
+            current = current.next;
+        } while (current != head);
+        System.out.println();
+    }
+
+    public void splitList() {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+
+        System.out.print("Enter the position to split the list (between 1 and " + getCount() + "): ");
+        Scanner scanner = new Scanner(System.in);
+        int position = scanner.nextInt();
+
+        if (position <= 0 || position > getCount()) {
+            System.out.println("Invalid position");
+            scanner.close();
+            return;
+        }
+
+        Node current = head;
+        int count = 1;
+        while (count < position && current.next != head) {
+            current = current.next;
+            count++;
+        }
+
+        if (current.next == head) {
+            System.out.println("List cannot be split at this position");
+            scanner.close();
+            return;
+        }
+
+        Node secondHead = current.next;
+        current.next = head;
+
+        Node secondCurrent = secondHead;
+        while (secondCurrent.next != head) {
+            secondCurrent = secondCurrent.next;
+        }
+        secondCurrent.next = secondHead;
+
+        System.out.println("First Half:");
+        display();
+
+        System.out.println("Second Half:");
+        CircularLinkedList secondHalf = new CircularLinkedList();
+        secondHalf.head = secondHead;
+        secondHalf.display();
+        
+        scanner.close();
+    }
+
+    private int getCount() {
+        if (head == null) {
+            return 0;
+        }
+        int count = 0;
+        Node current = head;
+        do {
+            count++;
+            current = current.next;
+        } while (current != head);
+        return count;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        CircularLinkedList circularLinkedList = new CircularLinkedList();
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of elements: ");
+        int n = scanner.nextInt();
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter element " + (i + 1) + ": ");
+            int data = scanner.nextInt();
+            circularLinkedList.insert(data);
+        }
+
+        System.out.println("Original List:");
+        circularLinkedList.display();
+
+        circularLinkedList.splitList();
+
+        scanner.close();
+    }
+}
