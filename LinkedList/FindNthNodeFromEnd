@@ -1,0 +1,34 @@
+public class FindNthNodeFromEnd {
+    class ListNode{
+        int data;
+        ListNode next = null;
+
+        public ListNode(int data){
+            this.data = data;
+        }
+    }
+
+    ListNode findNth(ListNode head, int n){
+        if(head == null || n<=0){
+            return null;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        for(int i = 0; i<n; i++){
+            if(fast == null){
+                return null;
+            }
+            fast = fast.next;
+        }
+
+        while(fast != null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        return slow;
+    }
+}
+
