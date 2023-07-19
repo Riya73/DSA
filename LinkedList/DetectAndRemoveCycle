@@ -1,0 +1,47 @@
+class DetectAndRemoveCycleLL {
+    class ListNode {
+        int data;
+        ListNode next;
+
+        public ListNode(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    public boolean detectCycle(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                // Cycle detected, now remove the cycle
+                removeCycle(head, slow);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void removeCycle(ListNode head, ListNode meetingPoint) {
+        ListNode ptr1 = head;
+        ListNode ptr2 = meetingPoint;
+
+        while (ptr1.next != ptr2.next) {
+            ptr1 = ptr1.next;
+            ptr2 = ptr2.next;
+        }
+
+        // ptr2 is now at the starting node of the cycle
+        // set the next pointer of the last node in the cycle to null
+        ptr2.next = null;
+    }
+}
