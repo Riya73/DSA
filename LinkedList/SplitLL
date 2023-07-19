@@ -1,0 +1,103 @@
+package LinkedList;
+
+import java.util.Scanner;
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}
+
+class Solution {
+    public ListNode[] splitLinkedList(ListNode head) {
+        ListNode list1 = null;
+        ListNode list2 = null;
+        ListNode p1 = null;
+        ListNode p2 = null;
+        ListNode current = head;
+        boolean isList1Turn = true;
+
+        while (current != null) {
+            if (isList1Turn) {
+                if (list1 == null) {
+                    list1 = current;
+                    p1 = current;
+                } else {
+                    p1.next = current;
+                    p1 = p1.next;
+                }
+                isList1Turn = false;
+            } else {
+                if (list2 == null) {
+                    list2 = current;
+                    p2 = current;
+                } else {
+                    p2.next = current;
+                    p2 = p2.next;
+                }
+                isList1Turn = true;
+            }
+            current = current.next;
+        }
+
+        if (p1 != null) {
+            p1.next = null;
+        }
+        if (p2 != null) {
+            p2.next = null;
+        }
+
+        ListNode[] result = {list1, list2};
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        
+        // Take user input for creating the linked list
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the values of the linked list nodes separated by space: ");
+        String[] values = scanner.nextLine().split(" ");
+        
+        // Create the linked list from user input
+        ListNode head = null;
+        ListNode current = null;
+        for (String value : values) {
+            int val = Integer.parseInt(value);
+            ListNode node = new ListNode(val);
+            if (head == null) {
+                head = node;
+                current = node;
+            } else {
+                current.next = node;
+                current = current.next;
+            }
+        }
+        
+        // Split the linked list into two lists
+        ListNode[] splitLists = solution.splitLinkedList(head);
+        ListNode list1 = splitLists[0];
+        ListNode list2 = splitLists[1];
+        
+        // Print the values of list1
+        System.out.print("List 1: ");
+        while (list1 != null) {
+            System.out.print(list1.val + " ");
+            list1 = list1.next;
+        }
+        System.out.println();
+        
+        // Print the values of list2
+        System.out.print("List 2: ");
+        while (list2 != null) {
+            System.out.print(list2.val + " ");
+            list2 = list2.next;
+        }
+        System.out.println();
+        
+        scanner.close();
+    }
+}
