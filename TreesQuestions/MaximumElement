@@ -1,0 +1,25 @@
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+public class BinaryTree {
+
+    // Find the maximum element in the binary tree
+    public int findMaximum(TreeNode root) {
+        if (root == null)
+            return Integer.MIN_VALUE;
+
+        int leftMax = findMaximum(root.left);
+        int rightMax = findMaximum(root.right);
+
+        return Math.max(root.val, Math.max(leftMax, rightMax));
+    }
+}
