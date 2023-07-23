@@ -1,0 +1,83 @@
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int val) {
+        this.val = val;
+        left = null;
+        right = null;
+    }
+}
+
+public class TreeViews {
+    // Method to print the top view of the binary tree iteratively
+    public static void printTopView(TreeNode root) {
+        if (root == null)
+            return;
+
+        Map<Integer, Integer> topViewMap = new TreeMap<>();
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        Queue<Integer> distanceQueue = new LinkedList<>();
+
+        nodeQueue.add(root);
+        distanceQueue.add(0);
+
+        while (!nodeQueue.isEmpty()) {
+            TreeNode currentNode = nodeQueue.poll();
+            int currentDistance = distanceQueue.poll();
+
+            if (!topViewMap.containsKey(currentDistance)) {
+                topViewMap.put(currentDistance, currentNode.val);
+            }
+
+            if (currentNode.left != null) {
+                nodeQueue.add(currentNode.left);
+                distanceQueue.add(currentDistance - 1);
+            }
+
+            if (currentNode.right != null) {
+                nodeQueue.add(currentNode.right);
+                distanceQueue.add(currentDistance + 1);
+            }
+        }
+
+        for (int value : topViewMap.values()) {
+            System.out.print(value + " ");
+        }
+    }
+
+    // Method to print the bottom view of the binary tree iteratively
+    public static void printBottomView(TreeNode root) {
+        if (root == null)
+            return;
+
+        Map<Integer, Integer> bottomViewMap = new TreeMap<>();
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        Queue<Integer> distanceQueue = new LinkedList<>();
+
+        nodeQueue.add(root);
+        distanceQueue.add(0);
+
+        while (!nodeQueue.isEmpty()) {
+            TreeNode currentNode = nodeQueue.poll();
+            int currentDistance = distanceQueue.poll();
+
+            bottomViewMap.put(currentDistance, currentNode.val);
+
+            if (currentNode.left != null) {
+                nodeQueue.add(currentNode.left);
+                distanceQueue.add(currentDistance - 1);
+            }
+
+            if (currentNode.right != null) {
+                nodeQueue.add(currentNode.right);
+                distanceQueue.add(currentDistance + 1);
+            }
+        }
+
+        for (int value : bottomViewMap.values()) {
+            System.out.print(value + " ");
+        }
+    }
+}
